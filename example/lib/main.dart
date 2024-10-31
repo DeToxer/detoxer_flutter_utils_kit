@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Expanded(
+        body: const Expanded(
           child: SingleChildScrollView(
             child: Column(
               children: [
