@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:utils_kit/extensions/list_extensions.dart';
+import 'package:utils_kit/utils_kit.dart';
 
 /// [SpacedColumn] is a custom [Column] widget that allows for easy spacing between its children.
 final class SpacedColumn extends StatelessWidget {

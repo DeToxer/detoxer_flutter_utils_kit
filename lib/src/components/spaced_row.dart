@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:utils_kit/extensions/list_extensions.dart';
+import 'package:utils_kit/utils_kit.dart';
 
 /// [SpacedRow] is a custom [Row] widget that allows for easy spacing between its children.
 final class SpacedRow extends StatelessWidget {

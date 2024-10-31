@@ -2,7 +2,7 @@
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:utils_kit/platform/platform_utils.dart';
+import 'package:utils_kit/utils_kit.dart';
 
 final class StorageFactory {
   static BasePreferenceStore createStorage(String domain) {
