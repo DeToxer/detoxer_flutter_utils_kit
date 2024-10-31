@@ -5,18 +5,30 @@ import 'package:flutter/material.dart';
 
 final bool isTesting = Platform.environment.containsKey('FLUTTER_TEST');
 
-const double _defaultScreenTypeSizeThreshold = 600;
+const double _phoneScreenTypeSizeThreshold = 600;
+const double _tabletScreenTypeSizeThreshold = 1024;
 
-ScreenType screenType({double screenTypeSizeThreshold = _defaultScreenTypeSizeThreshold}) {
+ScreenType screenType({
+  double screenTypeSizeThreshold = _phoneScreenTypeSizeThreshold,
+  double tabletScreenTypeSizeThreshold = _tabletScreenTypeSizeThreshold,
+}) {
   final platformDispatcher = WidgetsBinding.instance.platformDispatcher;
   var shortestSide = platformDispatcher.views.first.physicalSize.shortestSide;
   shortestSide = shortestSide / platformDispatcher.views.first.devicePixelRatio;
-  return shortestSide < screenTypeSizeThreshold ? ScreenType.mobile : ScreenType.tablet;
+
+  if (shortestSide < screenTypeSizeThreshold) {
+    return ScreenType.phone;
+  }
+  if (shortestSide <= tabletScreenTypeSizeThreshold) {
+    return ScreenType.tablet;
+  }
+  return ScreenType.desktop;
 }
 
 enum ScreenType {
-  mobile,
-  tablet;
+  phone,
+  tablet,
+  desktop;
 }
 
 enum DevicePlatform {
