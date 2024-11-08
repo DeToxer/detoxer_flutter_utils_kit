@@ -12,11 +12,19 @@ final class StorageFactory {
     return _PreferenceStore(domain: domain);
   }
 
-  static BasePreferenceStore createSecureStorage(String domain) {
+  static BasePreferenceStore createSecureStorage(
+    String domain, {
+    AndroidOptions? androidOptions,
+    IOSOptions? iosOptions,
+  }) {
     if (isTesting) {
       return _MemoryPreferenceStore();
     }
-    return _SecurePreferenceStore(domain: domain);
+    return _SecurePreferenceStore(
+      domain: domain,
+      androidOptions: androidOptions,
+      iosOptions: iosOptions,
+    );
   }
 }
 
@@ -142,12 +150,13 @@ final class _SecurePreferenceStore extends BasePreferenceStore {
 
   final FlutterSecureStorage _storage;
 
-  _SecurePreferenceStore({required this.domain})
-      : _storage = const FlutterSecureStorage(
-          iOptions: IOSOptions(accessibility: KeychainAccessibility.unlocked_this_device),
-          aOptions: AndroidOptions(
-            encryptedSharedPreferences: true,
-          ),
+  _SecurePreferenceStore({required this.domain, AndroidOptions? androidOptions, IOSOptions? iosOptions})
+      : _storage = FlutterSecureStorage(
+          iOptions: iosOptions ?? IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+          aOptions: androidOptions ??
+              AndroidOptions(
+                encryptedSharedPreferences: true,
+              ),
         );
 
   @override
