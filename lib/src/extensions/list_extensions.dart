@@ -10,6 +10,15 @@ extension ListUtils<T> on List<T> {
     }
     return this[index];
   }
+
+  T? firstWhereOrNull(bool Function(T element) test) {
+    if (isEmpty) return null;
+    for (final T element in this) {
+      if (test(element)) return element;
+    }
+    return null;
+  }
+
   T? get firstOrNull {
     if (isNotEmpty) return first;
     return null;
@@ -73,5 +82,16 @@ extension ListUtils<T> on List<T> {
 
   Map<TKey, TVal> toMap<TKey, TVal>(GetValue<T, TKey> getKey, GetValue<T, TVal> getVal) {
     return {for (final e in this) getKey(e): getVal(e)};
+  }
+}
+
+extension IterableUtils<T> on Iterable<T> {
+  T? firstWhereOrNull(bool Function(T element) test) {
+    for (final element in this) {
+      if (test(element)) {
+        return element;
+      }
+    }
+    return null;
   }
 }
