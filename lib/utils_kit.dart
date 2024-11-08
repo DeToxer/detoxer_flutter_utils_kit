@@ -7,3 +7,4 @@ export 'package:utils_kit/src/extensions/list_extensions.dart';
 export 'package:utils_kit/src/extensions/orientation_extensions.dart';
 export 'package:utils_kit/src/platform/platform_utils.dart';
 export 'package:utils_kit/src/storage/storage.dart';
+export 'package:utils_kit/src/parser.dart';
