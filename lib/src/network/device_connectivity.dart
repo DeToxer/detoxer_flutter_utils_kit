@@ -17,10 +17,19 @@ final class DeviceConnectivity {
     _timer = null;
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
       final List<ConnectivityResult> connectivityResult = await _connectivity.checkConnectivity();
-      if (!connectivityResult.contains(ConnectivityResult.mobile) && !connectivityResult.contains(ConnectivityResult.wifi)) {
+      final connected = connectivityResult.any((res) {
+        return res == ConnectivityResult.mobile ||
+            res == ConnectivityResult.wifi ||
+            res == ConnectivityResult.ethernet ||
+            res == ConnectivityResult.vpn ||
+            res == ConnectivityResult.other;
+      });
+
+      if (!connected) {
         _subject.add(ConnectionResult.disconnected);
         return;
       }
+
       try {
         final pingRes = await http.get(_pingUrl);
         if (pingRes.statusCode != 204) {
@@ -37,9 +46,18 @@ final class DeviceConnectivity {
 
   Future<ConnectionResult> checkConnectivity() async {
     final List<ConnectivityResult> connectivityResult = await _connectivity.checkConnectivity();
-    if (!connectivityResult.contains(ConnectivityResult.mobile) && !connectivityResult.contains(ConnectivityResult.wifi)) {
+    final connected = connectivityResult.any((res) {
+      return res == ConnectivityResult.mobile ||
+          res == ConnectivityResult.wifi ||
+          res == ConnectivityResult.ethernet ||
+          res == ConnectivityResult.vpn ||
+          res == ConnectivityResult.other;
+    });
+
+    if (!connected) {
       return ConnectionResult.disconnected;
     }
+
     try {
       final pingRes = await http.get(_pingUrl);
       if (pingRes.statusCode != 204) {
